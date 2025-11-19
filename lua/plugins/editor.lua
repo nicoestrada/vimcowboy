@@ -91,7 +91,15 @@ return {
         main = "ibl",
         ---@module "ibl"
         ---@type ibl.config
-        opts = {},
+        opts = {
+            indent = { char = "│" },
+            scope = { enabled = true, highlight = { "IblScope" } },
+        },
+        config = function(_, opts)
+            -- Ensure the scope highlight exists before ibl runs
+            vim.api.nvim_set_hl(0, "IblScope", { fg = "#928374", nocombine = true })
+            require("ibl").setup(opts)
+        end,
     },
     {
       "folke/flash.nvim",
